@@ -1,0 +1,20 @@
+# TOKEN
+.env
+.env.*
+*.env
+
+# DADOS RAW e SILVER
+raw/*
+!raw/.gitkeep
+silver/*
+!silver/.gitkeep
+
+# PYTHON
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCODE
+.vscode/
+.idea/
