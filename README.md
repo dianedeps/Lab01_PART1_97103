@@ -56,6 +56,12 @@ Dataset escolhido:
 
 
 #### 5. Bronze (Raw)
+    
+    Criar script de ingestão para lz
+    Criar script de ingestão para raw, salvar dados “as-is” em data/raw/
+    
+    
+#### 6. Silver (Tratamento)
+    Salvar em Parquet (data/silver/)
 
-Criar script de ingestão para lz
-Criar script de ingestão para raw, salvar dados “as-is” em data/raw/
+
