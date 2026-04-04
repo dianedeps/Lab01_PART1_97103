@@ -30,7 +30,7 @@ class RawToSilverIngestion:
         """
         Read a CSV file forcing all columns to string.
         """
-        return pd.read_csv(file_path, dtype=str)
+        return pd.read_csv(file_path, dtype=str, sep=";", encoding="utf-8-sig")
 
     def extract_loaded_schema(self, dataframe: pd.DataFrame) -> Dict[str, str]:
         """

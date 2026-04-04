@@ -62,6 +62,13 @@ Dataset escolhido:
     
     
 #### 6. Silver (Tratamento)
+
+    Profiling (nulos, tipos, stats)
+    Criar 5 gráficos
+    
     Salvar em Parquet (data/silver/)
+    
+    Limpeza (nulos, duplicados, tipos)
+    Padronização (snake_case)
 
 
