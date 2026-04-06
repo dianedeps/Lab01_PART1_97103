@@ -4,10 +4,9 @@
 *.env
 
 # DADOS RAW e SILVER
-raw/*
-!raw/.gitkeep
-silver/*
-!silver/.gitkeep
+
+data/*
+outputs/*
 
 # PYTHON
 __pycache__/

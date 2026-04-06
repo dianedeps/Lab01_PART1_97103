@@ -72,3 +72,15 @@ Dataset escolhido:
     Padronização (snake_case)
 
 
+#### 7. Gold (Modelagem + Business)
+    
+    Definir modelo (Star Schema)
+    
+    <diagram>
+
+    Criar tabelas no Postgres
+    
+    Carregar dados (Parquet → Postgres)
+    Criar 5 queries de negócio
+
+
