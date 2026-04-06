@@ -75,8 +75,8 @@ Dataset escolhido:
 #### 7. Gold (Modelagem + Business)
     
     Definir modelo (Star Schema)
-    
-    <diagram>
+        	
+<img width="605" height="674" alt="image" src="https://github.com/user-attachments/assets/a299d583-ddb0-4090-9efa-7d19d16e44f2" />
 
     Criar tabelas no Postgres
     
