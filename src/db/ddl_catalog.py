@@ -34,9 +34,9 @@ DDL_CATALOG = {
             fase_dia VARCHAR(50),
             lim_velocidade VARCHAR(30),
             tp_pista VARCHAR(50),
-            ind_guardrail BOOLEAN,
-            ind_cantcentral BOOLEAN,
-            ind_acostamento BOOLEAN
+            ind_guardrail VARCHAR(20),
+            ind_cantcentral VARCHAR(20),
+            ind_acostamento VARCHAR(20)
         );
     """,
 
@@ -48,8 +48,8 @@ DDL_CATALOG = {
             tp_envolvido VARCHAR(50),
             gravidade_lesao VARCHAR(50),
             equip_seguranca VARCHAR(100),
-            ind_motorista BOOLEAN,
-            susp_alcool BOOLEAN
+            ind_motorista VARCHAR(20),
+            susp_alcool VARCHAR(20)
         );
     """,
 
@@ -57,7 +57,7 @@ DDL_CATALOG = {
         CREATE TABLE IF NOT EXISTS public.dim_tipo_veiculo (
             pk_tipo_veiculo INTEGER PRIMARY KEY,
             tipo_veiculo VARCHAR(100),
-            ind_veic_estrangeiro BOOLEAN
+            ind_veic_estrangeiro VARCHAR(20)
         );
     """,
 
@@ -71,7 +71,7 @@ DDL_CATALOG = {
             qtde_acidente INTEGER,
             qtde_acid_com_obitos INTEGER,
             qtde_envolvidos INTEGER,
-            qtde_feridos_ilesos INTEGER,
+            qtde_feridosilesos INTEGER,
             qtde_obitos INTEGER,
             FOREIGN KEY (pk_tempo) REFERENCES public.dim_tempo(pk_tempo),
             FOREIGN KEY (pk_localidade) REFERENCES public.dim_localidade(pk_localidade),

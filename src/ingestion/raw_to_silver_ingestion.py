@@ -83,7 +83,6 @@ class RawToSilverIngestion:
             df["qtde_feridosilesos"] = pd.to_numeric(df["qtde_feridosilesos"], errors="coerce")
             df["qtde_obitos"] = pd.to_numeric(df["qtde_obitos"], errors="coerce")
 
-            df["flag_vitima"] = (df["qtde_envolvidos"] > 0)
             df["flag_ferido"] = (df["qtde_feridosilesos"] > 0)
             df["flag_obito"] = (df["qtde_obitos"] > 0)
 

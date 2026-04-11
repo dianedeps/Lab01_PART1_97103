@@ -1,86 +1,187 @@
-## Lab01 Part1 - Num. USP: 97103
+# Lab01 – Pipeline de Engenharia de Dados (NUSP: 97103)
 
-#### 1. Setup & Infra
+## 1. Configuração do Ambiente
 
-Criar repositório no GitHub: https://github.com/dianedeps/Lab01_PART1_97103
-Configurar ambiente Python (virtualizado com Conda)
+Repositório:
 
+[https://github.com/dianedeps/Lab01_PART1_97103](https://github.com/dianedeps/Lab01_PART1_97103)
 
-#### 2. Ativação local
+### Clonagem
 
-No Git Bash: git checkout branch feature/setup-env
-No Anaconda Prompt: conda activate lab01
-No VSCode: Vincular ambiente Ctrl + Shift + P e selecionar o lab01
+```bash
+git clone https://github.com/dianedeps/Lab01_PART1_97103
+cd Lab01_PART1_97103
+```
 
+### Ambiente Python
 
-#### 3. Instalar PostgreSQL + ferramenta (DBeaver)
+```bash
+conda create -n lab01 python=3.10
+conda activate lab01
+pip install -r requirements.txt
+```
 
-https://www.postgresql.org/download/
-No SQL Shell: postgres up and running
-Criei um DB: lab01
+### Configuração do Kaggle
 
-https://dbeaver.io/download/
-Dbeaver conectado ao Postgres
+```bash
+export KAGGLE_API_TOKEN=SEU_TOKEN
+```
 
+---
 
-#### 4. Data Source
+## 2. Tecnologias Utilizadas
 
-Opção 1: kagglehub: Python library
-    https://www.kaggle.com/docs/api
-    https://github.com/Kaggle/kagglehub
+* Python
 
-    API Token:
-        KGAT_meutoken
-    
-    To use this token, set the KAGGLE_API_TOKEN environment variable:
-        export KAGGLE_API_TOKEN=KGAT_meutoken
-    
-    After setting KAGGLE_API_TOKEN, you can use the client as follows:
-        kaggle competitions list
+  * pandas
+  * numpy
+  * matplotlib
+  * seaborn
+  * pyarrow
+* PostgreSQL
+* DBeaver
+* Conda
+* Kaggle API
 
-Opção 2: kaggle old style (.json file com user e token)
-    https://github.com/Kaggle/kaggle-cli
+---
 
+## 3. Fonte de Dados
 
-Dataset escolhido:
-    https://www.kaggle.com/datasets/mos3santos/quantitativo-de-acidentes-de-trnsito-no-brasil/data
+Dataset utilizado:
 
-    Summary
-        32 files
-            .csv
-        544 columns
-            String 272
-            Integer 240
-            DateTime 16
-            Other 16
+* Fonte: Kaggle
+* Link: [https://www.kaggle.com/datasets/mos3santos/quantitativo-de-acidentes-de-trnsito-no-brasil/data](https://www.kaggle.com/datasets/mos3santos/quantitativo-de-acidentes-de-trnsito-no-brasil/data)
 
+Características do dataset:
 
-#### 5. Bronze (Raw)
-    
-    Criar script de ingestão para lz
-    Criar script de ingestão para raw, salvar dados “as-is” em data/raw/
-    
-    
-#### 6. Silver (Tratamento)
+* 32 arquivos CSV
+* 544 colunas
+* Tipos variados (String, Integer, DateTime)
 
-    Profiling (nulos, tipos, stats)
-    Criar 5 gráficos
-    
-    Salvar em Parquet (data/silver/)
-    
-    Limpeza (nulos, duplicados, tipos)
-    Padronização (snake_case)
+---
 
+## 4. Arquitetura da Solução
 
-#### 7. Gold (Modelagem + Business)
-    
-    Definir modelo (Star Schema)
-        	
-<img width="605" height="674" alt="image" src="https://github.com/user-attachments/assets/a299d583-ddb0-4090-9efa-7d19d16e44f2" />
+O pipeline foi estruturado em três camadas:
 
-    Criar tabelas no Postgres
-    
-    Carregar dados (Parquet → Postgres)
-    Criar 5 queries de negócio
+* Bronze (Raw)
+* Silver (Tratamento)
+* Gold (Modelagem)
 
+### Fluxo do Pipeline
 
+```text
+[Kaggle API]
+      ↓
+Download dos dados (Python)
+      ↓
+Armazenamento em data/raw
+      ↓
+Profiling dos dados raw
+      ↓
+Ingestão Raw → Silver (CSV → Parquet + tratamento)
+      ↓
+Ingestão Silver → Gold (modelagem + carga)
+      ↓
+PostgreSQL (tabelas analíticas)
+```
+
+---
+
+## 5. Execução do Projeto
+
+Ordem de execução:
+
+1. 01_kaggle_download.ipynb
+2. 02_raw_to_silver_ingestion.ipynb
+3. 03_raw_data_profiling.ipynb
+4. 04_silver_to_gold.ipynb
+
+---
+
+## 6. Camada Bronze (Raw)
+
+Armazena os dados brutos sem transformação.
+
+Processos:
+
+* Download via Kaggle
+* Armazenamento em `data/raw/`
+* Leitura como string
+* Inclusão de colunas de controle:
+
+  * source_file
+  * ingestion_date
+
+---
+
+## 7. Camada Silver (Tratamento)
+
+Responsável pela preparação dos dados.
+
+Etapas:
+
+* Profiling:
+
+  * Nulos
+  * Tipos
+  * Estatísticas
+
+* Limpeza:
+
+  * Remoção de duplicados
+  * Tratamento de nulos
+  * Conversão de tipos
+
+* Padronização:
+
+  * snake_case
+
+* Armazenamento:
+
+  * Parquet em `data/silver/`
+
+---
+
+## 8. Camada Gold (Modelagem)
+
+Modelagem dimensional para análise.
+
+Modelo:
+
+* Fato:
+
+  * fato_acidente
+
+* Dimensões:
+
+  * dim_tempo
+  * dim_localidade
+  * dim_condicao_via
+  * dim_vitima
+  * dim_tipo_veiculo
+
+Banco:
+
+* PostgreSQL
+* Database: lab01
+
+Processo:
+
+* Leitura da Silver
+* Transformação para modelo dimensional
+* Carga no PostgreSQL
+
+---
+
+## 9. Entregáveis
+
+* Ingestão de dados
+* Camada Bronze
+* Camada Silver
+* Profiling e visualizações
+* Conversão para Parquet
+* Modelagem Star Schema
+* Carga no PostgreSQL
+
+---
